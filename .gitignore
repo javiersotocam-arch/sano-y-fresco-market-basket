@@ -1,0 +1,11 @@
+# Datos y resultados (no se suben)
+*.db
+*.csv
+*.xlsx
+
+# Credenciales
+.env
+
+# Jupyter y Python
+.ipynb_checkpoints/
+__pycache__/
