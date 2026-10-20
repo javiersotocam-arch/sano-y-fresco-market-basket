@@ -6,6 +6,14 @@ Análisis de ventas, productos y clientes en SQL, y un motor de recomendación p
 
 Un e-commerce de productos frescos necesita entender qué se vende, quién compra y qué productos tienden a comprarse juntos. Esto último es clave para dos decisiones de negocio muy concretas: qué recomendar a un cliente en el momento de la compra, y cómo organizar promociones cruzadas entre productos que ya se compran juntos de forma natural.
 
+## Resultados
+
+Datos: 4.975.718 líneas de venta, 2.060.188 pedidos y 181.903 clientes de 2023 (40 productos).
+
+- **Ventas**: 39,85 M€ en el año. Caen todos los meses (de 6,7 M€ en enero a 1,2 M€ en diciembre) porque se pierden clientes: los activos pasan de 149.775 a 17.349 y solo el 11 % de los clientes de enero sigue comprando en diciembre. Los que se quedan gastan más por pedido (de 18,7 € a 23,1 €).
+- **Error de importación en Power BI**: los importes con un solo decimal (por ejemplo, 9,80 €) se leían divididos entre 10 o entre 100 (0,98 €). Afectaba al 31 % de las líneas y el dashboard mostraba 27,5 M€ en lugar de 39,85 M€. Se corrigió recalculando el importe como precio unitario × cantidad.
+- **Market Basket**: **258 reglas útiles** de 1.560 posibles, con confianza media del 13,5 % y lift medio de 1,51. Las asociaciones más fuertes son cilantro ↔ limones (lift 3,58), ajo ↔ cebolla amarilla (3,53) y apio ↔ cebolla amarilla (2,84).
+
 ## Qué hace este proyecto
 
 - **Análisis exploratorio en SQL**, de lo general a lo específico:
@@ -28,6 +36,7 @@ La primera versión del Market Basket Analysis se revisó a fondo. Las correccio
 - **Reglas útiles y no útiles mezcladas**: ahora se filtran por lift > 1 y un soporte mínimo, y los productos que se compran juntos menos de lo esperado van en una tabla aparte.
 - **Rendimiento**: el cálculo filtraba millones de filas por cada pareja; ahora se resuelve con una multiplicación de matrices (`X.T @ X`) sobre una matriz de cestas mucho más ligera, y se comprueba que da los mismos resultados que las funciones originales.
 - **Enriquecimiento completo**: antes solo se añadían los datos del antecedente; ahora también los del consecuente, con nombre de sección y control de duplicados en los `merge`.
+- **Cifras de la versión anterior**: con los mismos datos, el método original daba 399 reglas, 48 de ellas con lift < 1, una confianza media de 8,33 % y un lift medio de 1,46.
 - **Robustez**: la conexión a la base de datos se cierra siempre y se comprueba antes que el archivo existe (si no, SQLite crea una base vacía sin avisar).
 
 El detalle de todas las correcciones está al final del notebook.
