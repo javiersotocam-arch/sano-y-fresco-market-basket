@@ -57,7 +57,7 @@ El detalle de todas las correcciones está al final del notebook.
 
 1. Ejecuta las consultas de `consultas_analisis_sano_y_fresco.sql` contra la base de datos de tickets de venta (`sanoyfresco.db`).
 2. Abre el notebook en Google Colab o Jupyter y coloca `sanoyfresco.db` en la misma carpeta (en Colab, súbelo al panel de Archivos). El archivo `secciones.xlsx` es opcional: añade el nombre de cada sección a las reglas.
-3. Ejecuta todas las celdas en orden. Las reglas se exportan a `reglas.csv`.
+3. Ejecuta todas las celdas en orden. Las reglas se exportan a `reglas_market_basket.csv`, el archivo que carga el dashboard de Power BI.
 
 ## Autor
 
